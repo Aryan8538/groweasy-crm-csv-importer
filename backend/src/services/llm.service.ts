@@ -1,5 +1,14 @@
 import Groq from "groq-sdk";
 import pLimit from "p-limit";
+import {
+  BATCH_SIZE,
+  GEMINI_MODEL,
+  GROQ_MODEL,
+  HEURISTIC_BATCH_DELAY_MS,
+  LLM_CONCURRENCY,
+  LLM_MAX_RETRIES,
+  LLM_RETRY_BASE_DELAY_MS
+} from "../config";
 
 // Helper to wait
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -7,8 +16,8 @@ const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 // Simple retry helper with exponential backoff
 async function retryWithBackoff<T>(
   fn: () => Promise<T>,
-  retries = 2,
-  delay = 1500
+  retries = LLM_MAX_RETRIES,
+  delay = LLM_RETRY_BASE_DELAY_MS
 ): Promise<T> {
   try {
     return await fn();
@@ -118,7 +127,7 @@ ${JSON.stringify(rows, null, 2)}`;
       { role: "system", content: "You are a precise JSON generator. You output ONLY valid JSON matching the requested structure." },
       { role: "user", content: prompt }
     ],
-    model: "llama-3.3-70b-versatile",
+    model: GROQ_MODEL,
     temperature: 0.1,
     response_format: { type: "json_object" }
   });
@@ -168,7 +177,7 @@ Input rows:
 ${JSON.stringify(rows, null, 2)}`;
 
   // Use native fetch to avoid external packages complexity
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
   const response = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -244,10 +253,9 @@ export async function processRowsWithLLM(
   if (isMockMode) {
     console.warn("⚠️ No API keys (GROQ_API_KEY, GEMINI_API_KEY, OPENAI_API_KEY) found. Running in Local Heuristic Fallback mode.");
     // Simulate slow network processing for beautiful progress bars
-    const batchSize = 25;
     const results: any[] = [];
-    for (let i = 0; i < total; i += batchSize) {
-      const chunk = rows.slice(i, i + batchSize);
+    for (let i = 0; i < total; i += BATCH_SIZE) {
+      const chunk = rows.slice(i, i + BATCH_SIZE);
       const chunkMapped = localHeuristicMapper(chunk);
       // Adjust chunk indices to absolute
       const adjusted = chunkMapped.map(item => ({
@@ -255,22 +263,21 @@ export async function processRowsWithLLM(
         index: item.index + i
       }));
       results.push(...adjusted);
-      
+
       // Artificial delay for UI feedback
-      await wait(800);
+      await wait(HEURISTIC_BATCH_DELAY_MS);
       if (onProgress) {
-        onProgress(Math.min(i + batchSize, total), total);
+        onProgress(Math.min(i + BATCH_SIZE, total), total);
       }
     }
     return results;
   }
 
-  const batchSize = 25;
-  const limit = pLimit(3); // Max 3 concurrent LLM calls
+  const limit = pLimit(LLM_CONCURRENCY);
   const batches: any[][] = [];
 
-  for (let i = 0; i < total; i += batchSize) {
-    batches.push(rows.slice(i, i + batchSize).map((row, idx) => ({
+  for (let i = 0; i < total; i += BATCH_SIZE) {
+    batches.push(rows.slice(i, i + BATCH_SIZE).map((row, idx) => ({
       index: i + idx,
       ...row
     })));

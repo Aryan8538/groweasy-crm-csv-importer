@@ -6,17 +6,17 @@ import Papa from "papaparse";
 import { processRowsWithLLM } from "./services/llm.service";
 import { validateAndNormalize } from "./services/validation";
 import { CrmRecord, SkippedRecord } from "./types";
+import { CORS_ORIGINS, MAX_FILE_BYTES, PORT } from "./config";
 
 // Load environment variables
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 // Enable CORS for frontend
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: CORS_ORIGINS,
     credentials: true
   })
 );
@@ -27,7 +27,7 @@ app.use(express.json());
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
-    fileSize: 5 * 1024 * 1024 // 5MB limit
+    fileSize: MAX_FILE_BYTES
   },
   fileFilter: (req, file, cb) => {
     // Only accept CSV files
