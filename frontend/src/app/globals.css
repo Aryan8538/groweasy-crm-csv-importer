@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+:root {
+  --background: #050505;
+  --foreground: #FFFFFF;
+  --card: #18181B;
+  --card-border: #27272A;
+  --primary: #FFFFFF;
+  --secondary: #050505;
+  --accent: #FFFFFF;
+  --text-primary: #FFFFFF;
+  --text-secondary: #A1A1AA;
+  --border: #27272A;
+  
+  /* Aura Design token group */
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-dm-sans);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-sans), sans-serif;
+  overflow-x: hidden;
+}
+
+/* Typography styles matching the PRD and design guidelines */
+.font-display {
+  font-family: var(--font-display), sans-serif;
+}
+
+.font-mono {
+  font-family: var(--font-mono), monospace;
+}
+
+/* Aura Card Design */
+.aura-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Aura Control Elements (Inputs, Selects, Buttons) */
+.aura-control {
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background-color: rgba(24, 24, 27, 0.6);
+  color: var(--text-primary);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aura-control:focus {
+  border-color: #FFFFFF;
+  outline: none;
+  box-shadow: 0 0 0 1px #FFFFFF;
+}
+
+/* Button hierarchy style */
+.aura-button-primary {
+  background-color: #FFFFFF;
+  color: #050505;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.aura-button-primary:hover {
+  background-color: #E4E4E7;
+  transform: translateY(-1px);
+}
+
+.aura-button-secondary {
+  background-color: transparent;
+  color: #FFFFFF;
+  border: 1px solid var(--border);
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.aura-button-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+/* Custom Scrollbars to match dark theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272A;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #52525B;
+}
+
+/* Scanline / Grid effect */
+.aura-grid-layer {
+  background-image: 
+    linear-gradient(to right, rgba(39, 39, 42, 0.2) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(39, 39, 42, 0.2) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000 60%, transparent 100%);
+}
