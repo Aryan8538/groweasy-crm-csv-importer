@@ -9,6 +9,7 @@ import {
   LLM_MAX_RETRIES,
   LLM_RETRY_BASE_DELAY_MS
 } from "../config";
+import { CsvRow, IndexedCsvRow, MappedRow } from "../types";
 
 // Helper to wait
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -47,7 +48,7 @@ function fuzzyMatchKey(headers: string[], targets: string[]): string | null {
 /**
  * Deterministic local mapper fallback when no API keys are present
  */
-function localHeuristicMapper(rows: Record<string, string>[]): any[] {
+function localHeuristicMapper(rows: CsvRow[]): MappedRow[] {
   if (rows.length === 0) return [];
   const headers = Object.keys(rows[0]);
 
@@ -80,10 +81,10 @@ function localHeuristicMapper(rows: Record<string, string>[]): any[] {
 
   // Map rows
   return rows.map((row, index) => {
-    const mapped: any = { index };
-    for (const key of Object.keys(mappingRules)) {
+    const mapped: MappedRow = { index };
+    for (const key of Object.keys(mappingRules) as (keyof typeof mappingRules)[]) {
       const header = headerMap[key];
-      mapped[key] = header ? row[header] : "";
+      mapped[key] = header ? row[header] ?? "" : "";
     }
     return mapped;
   });
@@ -92,7 +93,7 @@ function localHeuristicMapper(rows: Record<string, string>[]): any[] {
 /**
  * Calls Groq API to map fields
  */
-async function callGroqLLM(apiKey: string, rows: any[]): Promise<any[]> {
+async function callGroqLLM(apiKey: string, rows: IndexedCsvRow[]): Promise<MappedRow[]> {
   const groq = new Groq({ apiKey });
   const prompt = `You are a precise data extraction agent. Map the following raw CSV rows onto the target CRM schema.
   
@@ -148,7 +149,7 @@ ${JSON.stringify(rows, null, 2)}`;
 /**
  * Calls Gemini API if GROQ key is missing but GEMINI key is present
  */
-async function callGeminiLLM(apiKey: string, rows: any[]): Promise<any[]> {
+async function callGeminiLLM(apiKey: string, rows: IndexedCsvRow[]): Promise<MappedRow[]> {
   const prompt = `You are a precise data extraction agent. Map the following raw CSV rows onto the target CRM schema.
   
 CRM Schema Fields:
@@ -238,9 +239,9 @@ ${JSON.stringify(rows, null, 2)}`;
  * Process rows in batches using LLM with parallel limits and retries
  */
 export async function processRowsWithLLM(
-  rows: Record<string, string>[],
+  rows: CsvRow[],
   onProgress?: (processed: number, total: number) => void
-): Promise<any[]> {
+): Promise<MappedRow[]> {
   const total = rows.length;
   if (total === 0) return [];
 
@@ -274,7 +275,7 @@ export async function processRowsWithLLM(
   }
 
   const limit = pLimit(LLM_CONCURRENCY);
-  const batches: any[][] = [];
+  const batches: IndexedCsvRow[][] = [];
 
   for (let i = 0; i < total; i += BATCH_SIZE) {
     batches.push(rows.slice(i, i + BATCH_SIZE).map((row, idx) => ({
@@ -288,7 +289,7 @@ export async function processRowsWithLLM(
   const tasks = batches.map((batch) => {
     return limit(() =>
       retryWithBackoff(async () => {
-        let mappedBatch: any[];
+        let mappedBatch: MappedRow[];
         if (groqApiKey) {
           mappedBatch = await callGroqLLM(groqApiKey, batch);
         } else if (geminiApiKey) {
