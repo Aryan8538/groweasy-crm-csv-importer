@@ -74,9 +74,9 @@ export default function ResultsView({ result, onReset }: ResultsViewProps) {
     <div className="w-full flex flex-col gap-6">
       {/* Dashboard KPI summary cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl mx-auto">
-        <div className="aura-card p-6 flex items-center justify-between">
+        <div className="synapse-glass-card border border-white/5 p-6 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-white/5 text-white rounded-lg border border-[#27272A]">
+            <div className="p-3 bg-white/5 text-white rounded-lg border border-white/10">
               <CheckCircle className="w-8 h-8" />
             </div>
             <div>
@@ -91,14 +91,14 @@ export default function ResultsView({ result, onReset }: ResultsViewProps) {
               <button
                 onClick={downloadCsv}
                 title="Export CSV"
-                className="aura-button-secondary p-2.5 flex items-center justify-center cursor-pointer"
+                className="p-2.5 bg-transparent text-white border border-white/10 hover:border-white rounded-full transition duration-200 cursor-pointer flex items-center justify-center"
               >
                 <FileSpreadsheet className="w-5 h-5" />
               </button>
               <button
                 onClick={downloadJson}
                 title="Export JSON"
-                className="aura-button-secondary p-2.5 flex items-center justify-center cursor-pointer"
+                className="p-2.5 bg-transparent text-white border border-white/10 hover:border-white rounded-full transition duration-200 cursor-pointer flex items-center justify-center"
               >
                 <FileJson className="w-5 h-5" />
               </button>
@@ -106,9 +106,9 @@ export default function ResultsView({ result, onReset }: ResultsViewProps) {
           )}
         </div>
 
-        <div className="aura-card p-6 flex items-center justify-between">
+        <div className="synapse-glass-card border border-white/5 p-6 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-white/5 text-white rounded-lg border border-[#27272A]">
+            <div className="p-3 bg-white/5 text-white rounded-lg border border-white/10">
               <AlertTriangle className="w-8 h-8" />
             </div>
             <div>
@@ -120,7 +120,7 @@ export default function ResultsView({ result, onReset }: ResultsViewProps) {
           </div>
           <button
             onClick={onReset}
-            className="aura-button-secondary flex items-center gap-2 px-4 py-2.5 text-xs font-mono cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2.5 text-xs font-mono bg-transparent text-white border border-white/10 hover:border-white rounded-full transition duration-200 cursor-pointer"
           >
             <RotateCcw className="w-4 h-4" />
             RESET_MODULE
@@ -129,7 +129,7 @@ export default function ResultsView({ result, onReset }: ResultsViewProps) {
       </div>
 
       {/* Main Results Display Panels */}
-      <div className="aura-card overflow-hidden flex flex-col w-full min-h-[450px]">
+      <div className="synapse-glass-card border border-white/5 overflow-hidden flex flex-col w-full min-h-[450px]">
         {/* Navigation Tabs */}
         <div className="flex border-b border-[#27272A] bg-[#18181B]/50 justify-between items-center px-6">
           <div className="flex">

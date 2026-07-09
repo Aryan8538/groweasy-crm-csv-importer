@@ -1,115 +1,127 @@
 @import "tailwindcss";
 
 :root {
-  --background: #050505;
-  --foreground: #FFFFFF;
-  --card: #18181B;
-  --card-border: #27272A;
-  --primary: #FFFFFF;
-  --secondary: #050505;
-  --accent: #FFFFFF;
-  --text-primary: #FFFFFF;
-  --text-secondary: #A1A1AA;
-  --border: #27272A;
+  --background: #030303;
+  --foreground: #ffffff;
+  --primary: #8b5cf6; /* Violet */
+  --accent: #06b6d4; /* Cyan */
+  --success: #10b981; /* Emerald */
   
-  /* Aura Design token group */
   --font-sans: var(--font-inter);
-  --font-display: var(--font-dm-sans);
+  --font-serif: var(--font-serif);
   --font-mono: var(--font-jetbrains-mono);
 }
 
 body {
   background-color: var(--background);
-  color: var(--text-primary);
+  color: var(--foreground);
   font-family: var(--font-sans), sans-serif;
   overflow-x: hidden;
+  letter-spacing: -0.01em;
 }
 
-/* Typography styles matching the PRD and design guidelines */
+/* Snappy cubic-bezier transitions for premium tech feel */
+.snappy-transition {
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Typography styles matching the Synapse design */
 .font-display {
-  font-family: var(--font-display), sans-serif;
+  font-family: var(--font-serif), serif;
+  font-weight: 400;
+  letter-spacing: -0.03em;
 }
 
 .font-mono {
   font-family: var(--font-mono), monospace;
 }
 
-/* Aura Card Design */
-.aura-card {
-  background: var(--card);
-  border: 1px solid var(--card-border);
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+/* Glassmorphism styling */
+.synapse-glass {
+  background: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Aura Control Elements (Inputs, Selects, Buttons) */
-.aura-control {
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background-color: rgba(24, 24, 27, 0.6);
-  color: var(--text-primary);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+.synapse-glass-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
 }
 
-.aura-control:focus {
-  border-color: #FFFFFF;
-  outline: none;
-  box-shadow: 0 0 0 1px #FFFFFF;
+/* Gradients and shimmers */
+@keyframes textShimmer {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
 }
 
-/* Button hierarchy style */
-.aura-button-primary {
-  background-color: #FFFFFF;
-  color: #050505;
-  font-weight: 600;
-  border-radius: 8px;
-  transition: all 0.2s ease;
+.text-shimmer {
+  background: linear-gradient(90deg, #a78bfa 0%, #ffffff 40%, #ffffff 60%, #22d3ee 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShimmer 8s linear infinite;
 }
 
-.aura-button-primary:hover {
-  background-color: #E4E4E7;
-  transform: translateY(-1px);
+@keyframes spinConic {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.aura-button-secondary {
-  background-color: transparent;
-  color: #FFFFFF;
-  border: 1px solid var(--border);
-  font-weight: 500;
-  border-radius: 8px;
-  transition: all 0.2s ease;
+.shiny-border-spin {
+  animation: spinConic 4s linear infinite;
 }
 
-.aura-button-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-  border-color: #FFFFFF;
-  transform: translateY(-1px);
+/* Infinite Scrolling Ticker Animation */
+@keyframes tickerScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
-/* Custom Scrollbars to match dark theme */
+.ticker-animated {
+  animation: tickerScroll 40s linear infinite;
+}
+
+.ticker-container:hover .ticker-animated {
+  animation-play-state: paused;
+}
+
+/* Glow effects */
+.glow-violet {
+  box-shadow: 0 0 40px -15px rgba(139, 92, 246, 0.4);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 40px -15px rgba(6, 182, 212, 0.4);
+}
+
+/* Custom Webkit scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #050505;
+  background: #030303;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #27272A;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #52525B;
-}
-
-/* Scanline / Grid effect */
-.aura-grid-layer {
-  background-image: 
-    linear-gradient(to right, rgba(39, 39, 42, 0.2) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(39, 39, 42, 0.2) 1px, transparent 1px);
-  background-size: 40px 40px;
-  mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000 60%, transparent 100%);
+  background: rgba(255, 255, 255, 0.25);
 }

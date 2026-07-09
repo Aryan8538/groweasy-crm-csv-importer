@@ -100,10 +100,10 @@ export default function FileUpload({ onFileParsed }: FileUploadProps) {
     <div className="w-full max-w-2xl mx-auto flex flex-col gap-6">
       {/* Upload Box */}
       <div
-        className={`aura-card border-2 border-dashed p-12 text-center transition-all duration-300 flex flex-col items-center justify-center cursor-pointer
+        className={`synapse-glass-card border border-dashed p-12 text-center transition-all duration-300 flex flex-col items-center justify-center cursor-pointer
           ${isDragActive 
-            ? "border-white bg-[#27272A]/30 scale-[1.01]" 
-            : "border-[#27272A] hover:border-[#A1A1AA] hover:bg-[#18181B]/80"
+            ? "border-white bg-white/[0.05] scale-[1.01]" 
+            : "border-white/10 hover:border-white/30 hover:bg-white/[0.03]"
           }`}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
@@ -119,44 +119,44 @@ export default function FileUpload({ onFileParsed }: FileUploadProps) {
           onChange={handleChange}
         />
 
-        <div className="p-4 bg-white/5 rounded-lg text-white mb-6 hover:scale-105 transition-transform duration-300 border border-[#27272A]">
+        <div className="p-4 bg-white/5 rounded-full text-white mb-6 hover:scale-105 transition-transform duration-300 border border-white/10">
           <UploadCloud className="w-12 h-12" />
         </div>
 
         <h3 className="text-xl font-display font-semibold mb-2 text-white">
           Upload Lead CSV Document
         </h3>
-        <p className="text-sm text-[#A1A1AA] font-sans mb-6">
+        <p className="text-xs sm:text-sm text-[#A1A1AA] font-sans mb-6">
           Drag & drop your CSV file here, or click to browse (Max 5MB)
         </p>
 
-        <div className="flex items-center gap-2 px-3 py-1.5 bg-[#050505] rounded-lg border border-[#27272A] text-xs text-[#A1A1AA] font-mono">
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-[#030303] rounded-full border border-white/5 text-xs text-[#A1A1AA] font-mono">
           <FileSpreadsheet className="w-4 h-4 text-white" />
-          SYSTEM INPUT // SUPPORTING REAL ESTATE & AD CAMPAIGN EXPORTS
+          SYSTEM INPUT // SUPPORTING REAL ESTATE & AD EXPORTS
         </div>
       </div>
 
       {/* Quick Test Templates */}
       <div className="flex flex-col items-center gap-4 py-2">
-        <span className="text-[10px] font-mono text-[#A1A1AA] tracking-widest uppercase">
+        <span className="text-[9px] font-mono text-[#A1A1AA]/50 tracking-widest uppercase">
           Inject Sandbox Data Modules
         </span>
         <div className="flex flex-wrap justify-center gap-3">
           <button
             onClick={() => handleLoadSample("clean")}
-            className="px-4 py-2 bg-[#18181B] border border-[#27272A] hover:border-white hover:bg-[#27272A] text-xs font-mono text-white rounded-lg transition duration-200"
+            className="px-4 py-2.5 bg-transparent border border-white/10 hover:border-white text-xs font-mono text-[#A1A1AA] hover:text-white rounded-full transition duration-200 cursor-pointer"
           >
             SYS_MOCK // CLEAN_REAL_ESTATE
           </button>
           <button
             onClick={() => handleLoadSample("messy")}
-            className="px-4 py-2 bg-[#18181B] border border-[#27272A] hover:border-white hover:bg-[#27272A] text-xs font-mono text-white rounded-lg transition duration-200"
+            className="px-4 py-2.5 bg-transparent border border-white/10 hover:border-white text-xs font-mono text-[#A1A1AA] hover:text-white rounded-full transition duration-200 cursor-pointer"
           >
             SYS_MOCK // MESSY_LEADS
           </button>
           <button
             onClick={() => handleLoadSample("skipped")}
-            className="px-4 py-2 bg-[#18181B] border border-[#27272A] hover:border-white hover:bg-[#27272A] text-xs font-mono text-white rounded-lg transition duration-200"
+            className="px-4 py-2.5 bg-transparent border border-white/10 hover:border-white text-xs font-mono text-[#A1A1AA] hover:text-white rounded-full transition duration-200 cursor-pointer"
           >
             SYS_MOCK // SKIPPED_LEADS
           </button>
@@ -164,8 +164,8 @@ export default function FileUpload({ onFileParsed }: FileUploadProps) {
       </div>
 
       {error && (
-        <div className="flex items-center gap-2 p-4 bg-[#18181B] border border-[#ef4444]/40 rounded-lg text-[#ef4444] text-xs font-mono">
-          <AlertCircle className="w-5 h-5 flex-shrink-0 text-[#ef4444]" />
+        <div className="flex items-center gap-2 p-4 bg-black border border-[#f43f5e]/30 rounded-lg text-[#f43f5e] text-xs font-mono">
+          <AlertCircle className="w-5 h-5 flex-shrink-0 text-[#f43f5e]" />
           <span>ERROR // {error.toUpperCase()}</span>
         </div>
       )}

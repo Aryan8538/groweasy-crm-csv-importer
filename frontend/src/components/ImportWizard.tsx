@@ -206,7 +206,7 @@ export default function ImportWizard() {
         )}
 
         {step === "loading" && (
-          <div className="aura-card p-12 text-center max-w-md mx-auto flex flex-col items-center pulse-glow">
+          <div className="synapse-glass-card border border-white/5 p-12 text-center max-w-md mx-auto flex flex-col items-center pulse-glow">
             <Loader2 className="w-12 h-12 text-white animate-spin mb-6" />
             <h3 className="text-xl font-display font-bold text-white mb-2">NORMALIZING_MODULE</h3>
             <p className="text-xs font-sans text-[#A1A1AA] mb-6">
@@ -214,9 +214,9 @@ export default function ImportWizard() {
             </p>
             
             {/* Progress metrics */}
-            <div className="w-full bg-[#050505] border border-[#27272A] rounded-lg h-2 overflow-hidden mb-3">
+            <div className="w-full bg-[#050505] border border-white/10 rounded-full h-2 overflow-hidden mb-3">
               <div
-                className="bg-white h-full rounded-lg transition-all duration-300 shadow-[0_0_8px_rgba(255,255,255,0.4)]"
+                className="bg-white h-full rounded-full transition-all duration-300 shadow-[0_0_8px_rgba(255,255,255,0.4)]"
                 style={{
                   width: `${progress.total > 0 ? (progress.processed / progress.total) * 100 : 0}%`
                 }}
