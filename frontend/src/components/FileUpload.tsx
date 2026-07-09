@@ -100,7 +100,7 @@ export default function FileUpload({ onFileParsed }: FileUploadProps) {
     <div className="w-full max-w-2xl mx-auto flex flex-col gap-6">
       {/* Upload Box */}
       <div
-        className={`synapse-glass-card border border-dashed p-12 text-center transition-all duration-300 flex flex-col items-center justify-center cursor-pointer
+        className={`cortex-glass-card border border-dashed p-12 text-center transition-all duration-300 flex flex-col items-center justify-center cursor-pointer
           ${isDragActive 
             ? "border-white bg-white/[0.05] scale-[1.01]" 
             : "border-white/10 hover:border-white/30 hover:bg-white/[0.03]"

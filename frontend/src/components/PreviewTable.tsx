@@ -33,7 +33,7 @@ export default function PreviewTable({
   const previewRows = rows.slice(0, 50);
 
   return (
-    <div className="w-full flex flex-col h-full max-h-[75vh] synapse-glass-card border border-white/5 overflow-hidden">
+    <div className="w-full flex flex-col h-full max-h-[75vh] cortex-glass-card border border-white/5 overflow-hidden">
       {/* Table Header Section */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-6 border-b border-white/15 bg-black/30 gap-4">
         <div className="flex items-center gap-3">

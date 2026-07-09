@@ -206,7 +206,7 @@ export default function ImportWizard() {
         )}
 
         {step === "loading" && (
-          <div className="synapse-glass-card border border-white/5 p-12 text-center max-w-md mx-auto flex flex-col items-center pulse-glow">
+          <div className="cortex-glass-card border border-white/5 p-12 text-center max-w-md mx-auto flex flex-col items-center pulse-glow">
             <Loader2 className="w-12 h-12 text-white animate-spin mb-6" />
             <h3 className="text-xl font-display font-bold text-white mb-2">NORMALIZING_MODULE</h3>
             <p className="text-xs font-sans text-[#A1A1AA] mb-6">

@@ -74,7 +74,7 @@ export default function ResultsView({ result, onReset }: ResultsViewProps) {
     <div className="w-full flex flex-col gap-6">
       {/* Dashboard KPI summary cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl mx-auto">
-        <div className="synapse-glass-card border border-white/5 p-6 flex items-center justify-between">
+        <div className="cortex-glass-card border border-white/5 p-6 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-white/5 text-white rounded-lg border border-white/10">
               <CheckCircle className="w-8 h-8" />
@@ -106,7 +106,7 @@ export default function ResultsView({ result, onReset }: ResultsViewProps) {
           )}
         </div>
 
-        <div className="synapse-glass-card border border-white/5 p-6 flex items-center justify-between">
+        <div className="cortex-glass-card border border-white/5 p-6 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-white/5 text-white rounded-lg border border-white/10">
               <AlertTriangle className="w-8 h-8" />
@@ -129,7 +129,7 @@ export default function ResultsView({ result, onReset }: ResultsViewProps) {
       </div>
 
       {/* Main Results Display Panels */}
-      <div className="synapse-glass-card border border-white/5 overflow-hidden flex flex-col w-full min-h-[450px]">
+      <div className="cortex-glass-card border border-white/5 overflow-hidden flex flex-col w-full min-h-[450px]">
         {/* Navigation Tabs */}
         <div className="flex border-b border-[#27272A] bg-[#18181B]/50 justify-between items-center px-6">
           <div className="flex">

@@ -35,7 +35,7 @@ export default function InteractiveFeatureCard({ icon, title, description }: Int
   return (
     <div
       ref={cardRef}
-      className={`synapse-glass-card p-10 flex flex-col items-start text-left group hover:scale-[1.01] hover:-translate-y-3 hover:border-[#8b5cf6]/40 hover:bg-white/[0.04] hover:shadow-[0_0_20px_-10px_rgba(139,92,246,0.4)] select-none snappy-transition cursor-default
+      className={`cortex-glass-card p-10 flex flex-col items-start text-left group hover:scale-[1.01] hover:-translate-y-3 hover:border-[#8b5cf6]/40 hover:bg-white/[0.04] hover:shadow-[0_0_20px_-10px_rgba(139,92,246,0.4)] select-none snappy-transition cursor-default
         ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-[30px]"}`}
     >
       {/* Icon Square Tinted Box */}

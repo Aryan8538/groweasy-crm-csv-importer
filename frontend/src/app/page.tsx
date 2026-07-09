@@ -21,7 +21,7 @@ export default function Home() {
         {/* Subhead Tag */}
         <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] font-mono tracking-widest text-[#A1A1AA] uppercase mb-8 shadow-lg">
           <Sparkles className="w-3.5 h-3.5 text-[#06b6d4]" />
-          AURA // SYSTEM ACTIVE
+          GROWEASY // FLOW SYSTEM ACTIVE
         </div>
 
         {/* Massive Serif Title */}
@@ -121,7 +121,7 @@ export default function Home() {
           <div className="flex flex-col items-start gap-3">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-gradient-to-r from-[#8b5cf6] to-[#06b6d4]" />
-              <span className="font-display text-xl text-white">Synapse</span>
+              <span className="font-display text-xl text-white">GrowEasy Flow</span>
             </div>
             <p className="text-[10px] font-mono text-[#A1A1AA]/50 tracking-wider">
               GROW_EASY // LEAD_NORMALIZATION_INTEGRATION
@@ -142,7 +142,7 @@ export default function Home() {
 
         {/* Copyright */}
         <div className="max-w-5xl mx-auto mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between text-[10px] font-mono text-[#A1A1AA]/30">
-          <span>&copy; {new Date().getFullYear()} SYNAPSE INC. ALL RIGHTS RESERVED.</span>
+          <span>&copy; {new Date().getFullYear()} GROWEASY SYSTEMS. ALL RIGHTS RESERVED.</span>
           <span className="mt-2 sm:mt-0">DESIGNED BY MENG TO // IMPLEMENTED BY ANTIGRAVITY</span>
         </div>
       </footer>

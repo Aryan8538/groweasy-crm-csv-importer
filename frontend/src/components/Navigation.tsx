@@ -8,11 +8,11 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-[672px] z-50 synapse-glass rounded-full px-6 py-2.5 flex items-center justify-between shadow-2xl select-none">
+    <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-[672px] z-50 cortex-glass rounded-full px-6 py-2.5 flex items-center justify-between shadow-2xl select-none">
       {/* Left Logo */}
       <div className="flex items-center gap-2">
         <div className="w-2 h-2 rounded-full bg-gradient-to-r from-[#8b5cf6] to-[#06b6d4]" />
-        <span className="font-display text-lg text-white">Synapse</span>
+        <span className="font-display text-lg text-white">GrowEasy Flow</span>
       </div>
 
       {/* Center Links */}
