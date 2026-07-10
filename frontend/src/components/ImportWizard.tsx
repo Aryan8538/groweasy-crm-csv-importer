@@ -48,7 +48,8 @@ export default function ImportWizard() {
     formData.append("file", rawFile);
 
     try {
-      const response = await fetch("http://localhost:5000/api/import", {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const response = await fetch(`${apiUrl}/api/import`, {
         method: "POST",
         headers: {
           Accept: "text/event-stream"

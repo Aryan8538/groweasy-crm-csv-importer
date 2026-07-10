@@ -11,7 +11,9 @@
 export const PORT = Number(process.env.PORT) || 5000;
 
 /** Browser origins permitted to call the API (the Next.js dev server). */
-export const CORS_ORIGINS = ["http://localhost:3000", "http://localhost:3001"];
+export const CORS_ORIGINS = process.env.CORS_ORIGINS
+  ? process.env.CORS_ORIGINS.split(",").map((url) => url.trim())
+  : ["http://localhost:3000", "http://localhost:3001"];
 
 /** Maximum accepted upload size. Mirrored by the client-side guard. */
 export const MAX_FILE_BYTES = 5 * 1024 * 1024; // 5 MB
