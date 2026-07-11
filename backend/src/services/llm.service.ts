@@ -147,6 +147,21 @@ ${JSON.stringify(rows, null, 2)}`;
 }
 
 /**
+ * Helper to extract and parse JSON from raw text response
+ */
+function cleanJsonResponseText(text: string): string {
+  let clean = text.trim();
+  // Remove markdown code block wrapping (e.g. ```json ... ```)
+  if (clean.includes("```")) {
+    const match = clean.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+    if (match && match[1]) {
+      clean = match[1].trim();
+    }
+  }
+  return clean;
+}
+
+/**
  * Calls Gemini API if GROQ key is missing but GEMINI key is present
  */
 async function callGeminiLLM(apiKey: string, rows: IndexedCsvRow[]): Promise<MappedRow[]> {
@@ -172,7 +187,7 @@ Rules:
 1. Examine the raw headers and values. Deduce the meaning.
 2. Return the original "index" for each row.
 3. Output a JSON object with a single key "records" containing the array of mapped rows.
-4. Output ONLY valid JSON. No markdown fences.
+4. Output ONLY valid JSON. No conversational text, and no markdown formatting outside of a potential JSON code block if required.
 
 Input rows:
 ${JSON.stringify(rows, null, 2)}`;
@@ -185,37 +200,7 @@ ${JSON.stringify(rows, null, 2)}`;
     body: JSON.stringify({
       contents: [{ parts: [{ text: prompt }] }],
       generationConfig: {
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: "OBJECT",
-          properties: {
-            records: {
-              type: "ARRAY",
-              items: {
-                type: "OBJECT",
-                properties: {
-                  index: { type: "INTEGER" },
-                  created_at: { type: "STRING" },
-                  name: { type: "STRING" },
-                  email: { type: "STRING" },
-                  phone: { type: "STRING" },
-                  company: { type: "STRING" },
-                  city: { type: "STRING" },
-                  state: { type: "STRING" },
-                  country: { type: "STRING" },
-                  lead_owner: { type: "STRING" },
-                  crm_status: { type: "STRING" },
-                  crm_note: { type: "STRING" },
-                  data_source: { type: "STRING" },
-                  possession_time: { type: "STRING" },
-                  description: { type: "STRING" }
-                },
-                required: ["index"]
-              }
-            }
-          },
-          required: ["records"]
-        }
+        temperature: 0.1
       }
     })
   });
@@ -231,8 +216,17 @@ ${JSON.stringify(rows, null, 2)}`;
     throw new Error("Empty text from Gemini response");
   }
 
-  const parsed = JSON.parse(text);
-  return parsed.records;
+  try {
+    const cleanedText = cleanJsonResponseText(text);
+    const parsed = JSON.parse(cleanedText);
+    if (!parsed.records || !Array.isArray(parsed.records)) {
+      throw new Error("Invalid response format, missing 'records' array");
+    }
+    return parsed.records;
+  } catch (parseErr: any) {
+    console.error("Failed to parse Gemini JSON output. Raw response was:", text);
+    throw new Error(`Failed to parse Gemini output: ${parseErr.message}`);
+  }
 }
 
 /**
