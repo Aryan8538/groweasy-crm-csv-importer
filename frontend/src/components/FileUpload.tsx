@@ -59,6 +59,12 @@ export default function FileUpload({ onFileParsed }: FileUploadProps) {
           return;
         }
 
+        // Limit row count for the demo
+        if (rows.length > 100) {
+          setError(`File contains ${rows.length} rows. For performance and API rate-limiting, imports are limited to a maximum of 100 rows during the demo. Please truncate your file.`);
+          return;
+        }
+
         const headers = results.meta.fields || Object.keys(rows[0] || {});
         if (headers.length === 0) {
           setError("No headers found in the CSV file.");

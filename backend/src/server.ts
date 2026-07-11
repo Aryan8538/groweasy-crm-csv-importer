@@ -13,10 +13,14 @@ dotenv.config();
 
 const app = express();
 
-// Enable CORS for frontend
+// Enable CORS for frontend - dynamically allow any requesting origin to avoid configuration mismatches
 app.use(
   cors({
-    origin: CORS_ORIGINS,
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps, curl, etc.)
+      if (!origin) return callback(null, true);
+      callback(null, true);
+    },
     credentials: true
   })
 );
@@ -86,6 +90,14 @@ app.post(
       const rows = parsed.data;
       if (rows.length === 0) {
         res.status(400).json({ error: "Uploaded CSV file is empty" });
+        return;
+      }
+
+      // Add a limit of 100 rows for demo performance and API quota protection
+      if (rows.length > 100) {
+        res.status(400).json({
+          error: `File contains ${rows.length} rows. For performance and API rate-limiting, imports are limited to a maximum of 100 rows per file during the demo.`
+        });
         return;
       }
 
